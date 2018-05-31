@@ -1,0 +1,11 @@
+framework module TrustSDK {
+  umbrella header "TrustSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module TrustSDK.Swift {
+    header "TrustSDK-Swift.h"
+    requires objc
+}

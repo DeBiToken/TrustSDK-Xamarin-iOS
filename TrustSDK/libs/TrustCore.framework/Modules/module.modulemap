@@ -1,0 +1,11 @@
+framework module TrustCore {
+  umbrella header "TrustCore-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module TrustCore.Swift {
+    header "TrustCore-Swift.h"
+    requires objc
+}
