@@ -10,7 +10,7 @@ namespace TrustSDKSample
     {
         // class-level declarations
 		public static TrustSDK.TrustSDK Trust = new TrustSDK.TrustSDK("trustexample");
-        
+
 
         public override UIWindow Window
         {
