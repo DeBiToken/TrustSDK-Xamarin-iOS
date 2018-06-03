@@ -201,11 +201,12 @@ SWIFT_CLASS_NAMED("TrustSDK")
 
 
 
+@class NSError;
 
 @interface TrustSDK (SWIFT_EXTENSION(TrustSDK))
-- (void)signMessage:(NSData * _Nonnull)message address:(NSString * _Nullable)address completion:(void (^ _Nonnull)(NSData * _Nonnull))completion;
-- (void)signTransaction:(NSString * _Nonnull)gasPrice :(uint64_t)gasLimit :(NSString * _Nonnull)address amount:(NSString * _Nonnull)amount completion:(void (^ _Nonnull)(NSData * _Nonnull))completion;
-- (void)signPersonalMessage:(NSData * _Nonnull)message address:(NSString * _Nullable)address completion:(void (^ _Nonnull)(NSData * _Nonnull))completion;
+- (void)signMessage:(NSData * _Nonnull)message address:(NSString * _Nullable)address success:(void (^ _Nonnull)(NSData * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
+- (void)signTransaction:(NSString * _Nonnull)gasPrice :(uint64_t)gasLimit :(NSString * _Nonnull)address amount:(NSString * _Nonnull)amount success:(void (^ _Nonnull)(NSData * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
+- (void)signPersonalMessage:(NSData * _Nonnull)message address:(NSString * _Nullable)address success:(void (^ _Nonnull)(NSData * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
 @end
 
 #if __has_attribute(external_source_symbol)

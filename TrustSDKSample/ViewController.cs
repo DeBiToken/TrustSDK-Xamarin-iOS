@@ -17,20 +17,14 @@ namespace TrustSDKSample
 			ulong gasLimit = 21000;
 			var toAddress = ToAddressInput.Text;
 			var amount = AmountInput.Text;
-            
-			AppDelegate.Trust.SignTransaction(gasPrice, gasLimit, toAddress, amount, (NSData obj) =>
-			{
-				//Create Alert
-                string str = ByteArrayToString(obj.ToArray());
-                var okAlertController = UIAlertController.Create("Success", str, UIAlertControllerStyle.Alert);
 
-                //Add Action
-                okAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
-
-                // Present Alert
-                PresentViewController(okAlertController, true, null);
-
-			});
+			AppDelegate.Trust.SignTransaction(gasPrice, gasLimit, toAddress, amount, (NSData res) => {
+                string str = ByteArrayToString(res.ToArray());
+                ShowMessage(str, true);
+            }, (NSError err) => {
+                string str = "Error Code: " + err.Code;
+                ShowMessage(str, false);
+            });
 
 		}
 
@@ -38,17 +32,13 @@ namespace TrustSDKSample
 		{
 			var message = TextInput.Text;
 
-			AppDelegate.Trust.SignMessage(message, "", (NSData obj) =>
+			AppDelegate.Trust.SignMessage(message, "", (NSData res) =>
             {
-				//Create Alert
-				string str = ByteArrayToString(obj.ToArray());
-				var okAlertController = UIAlertController.Create("Success", str, UIAlertControllerStyle.Alert);
-
-                //Add Action
-                okAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
-
-                // Present Alert
-                PresentViewController(okAlertController, true, null);
+                string str = ByteArrayToString(res.ToArray());
+                ShowMessage(str, true);
+            }, (NSError err) => {
+                string str = "Error Code: " + err.Code;
+                ShowMessage(str, false);
             });
 
             
@@ -66,9 +56,19 @@ namespace TrustSDKSample
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use.
         }
-		public static string ByteArrayToString(byte[] ba)
+		private static string ByteArrayToString(byte[] ba)
         {
             return BitConverter.ToString(ba).Replace("-", "");
+        }
+        private void ShowMessage(String msg, bool success) {
+            //Create Alert
+            var okAlertController = UIAlertController.Create(success ? "Success" : "Error", msg, UIAlertControllerStyle.Alert);
+
+            //Add Action
+            okAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+
+            // Present Alert
+            PresentViewController(okAlertController, true, null);
         }
     }
 }
